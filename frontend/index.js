@@ -42,7 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 averagePrice.textContent = 'No prices available to calculate average';
             } else {
                 const average = Number(averageResult[0]);
-                averagePrice.textContent = `Average Price: $${average.toFixed(2)}`;
+                const roundedAverage = Math.round(average * 100) / 100;
+                averagePrice.textContent = `Average Price: $${roundedAverage}`;
             }
             averagePrice.classList.remove('d-none');
         } catch (error) {
@@ -72,10 +73,11 @@ async function loadPrices() {
             const row = document.createElement('tr');
             const date = new Date(Number(entry.timestamp) / 1000000); // Convert nanoseconds to milliseconds
             const price = Number(entry.price);
+            const roundedPrice = Math.round(price * 100) / 100;
             
             row.innerHTML = `
                 <td>${date.toLocaleString()}</td>
-                <td>$${price.toFixed(2)}</td>
+                <td>$${roundedPrice}</td>
             `;
             
             priceTableBody.appendChild(row);
