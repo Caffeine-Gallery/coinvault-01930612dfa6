@@ -37,10 +37,11 @@ document.addEventListener('DOMContentLoaded', () => {
         averagePrice.classList.add('d-none');
 
         try {
-            const average = await backend.getAveragePrice();
-            if (average === null) {
+            const averageResult = await backend.getAveragePrice();
+            if (averageResult.length === 0 || averageResult[0] === null) {
                 averagePrice.textContent = 'No prices available to calculate average';
             } else {
+                const average = Number(averageResult[0]);
                 averagePrice.textContent = `Average Price: $${average.toFixed(2)}`;
             }
             averagePrice.classList.remove('d-none');
@@ -70,10 +71,11 @@ async function loadPrices() {
         prices.forEach(entry => {
             const row = document.createElement('tr');
             const date = new Date(Number(entry.timestamp) / 1000000); // Convert nanoseconds to milliseconds
+            const price = Number(entry.price);
             
             row.innerHTML = `
                 <td>${date.toLocaleString()}</td>
-                <td>$${entry.price.toFixed(2)}</td>
+                <td>$${price.toFixed(2)}</td>
             `;
             
             priceTableBody.appendChild(row);
