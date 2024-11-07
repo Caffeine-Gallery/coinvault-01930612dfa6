@@ -22,8 +22,17 @@
     cursor: not-allowed;
 }
 
+#averagePrice {
+    margin-top: 1rem;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 0 15px;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
     }
 }

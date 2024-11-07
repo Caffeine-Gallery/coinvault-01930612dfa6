@@ -30,7 +30,14 @@
 
                 <div class="card mt-4">
                     <div class="card-body">
-                        <h5 class="card-title">Price History</h5>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0">Price History</h5>
+                            <button class="btn btn-secondary" id="averageBtn">
+                                <span class="spinner-border spinner-border-sm d-none" id="averageSpinner"></span>
+                                Calculate Average
+                            </button>
+                        </div>
+                        <div id="averagePrice" class="alert alert-info d-none mb-3"></div>
                         <div id="loadingHistory" class="text-center d-none">
                             <div class="spinner-border"></div>
                         </div>

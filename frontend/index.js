@@ -26,6 +26,32 @@ document.addEventListener('DOMContentLoaded', () => {
             spinner.classList.add('d-none');
         }
     });
+
+    document.getElementById('averageBtn').addEventListener('click', async () => {
+        const averageBtn = document.getElementById('averageBtn');
+        const spinner = document.getElementById('averageSpinner');
+        const averagePrice = document.getElementById('averagePrice');
+        
+        averageBtn.disabled = true;
+        spinner.classList.remove('d-none');
+        averagePrice.classList.add('d-none');
+
+        try {
+            const average = await backend.getAveragePrice();
+            if (average === null) {
+                averagePrice.textContent = 'No prices available to calculate average';
+            } else {
+                averagePrice.textContent = `Average Price: $${average.toFixed(2)}`;
+            }
+            averagePrice.classList.remove('d-none');
+        } catch (error) {
+            console.error('Error calculating average:', error);
+            alert('Failed to calculate average price. Please try again.');
+        } finally {
+            averageBtn.disabled = false;
+            spinner.classList.add('d-none');
+        }
+    });
 });
 
 async function loadPrices() {

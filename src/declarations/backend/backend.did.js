@@ -5,6 +5,7 @@ export const idlFactory = ({ IDL }) => {
   });
   return IDL.Service({
     'addPrice' : IDL.Func([IDL.Float64], [], []),
+    'getAveragePrice' : IDL.Func([], [IDL.Opt(IDL.Float64)], ['query']),
     'getPrices' : IDL.Func([], [IDL.Vec(PriceEntry)], ['query']),
   });
 };

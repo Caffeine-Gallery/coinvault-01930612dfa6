@@ -29,4 +29,18 @@ actor {
     public query func getPrices() : async [PriceEntry] {
         return priceHistory;
     };
+
+    // Calculate average price
+    public query func getAveragePrice() : async ?Float {
+        if (priceHistory.size() == 0) {
+            return null;
+        };
+        
+        var sum: Float = 0;
+        for (entry in priceHistory.vals()) {
+            sum += entry.price;
+        };
+        
+        return ?(sum / Float.fromInt(priceHistory.size()));
+    };
 }
