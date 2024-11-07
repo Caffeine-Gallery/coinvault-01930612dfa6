@@ -43,4 +43,20 @@ actor {
         
         return ?(sum / Float.fromInt(priceHistory.size()));
     };
+
+    // Get highest price
+    public query func getHighestPrice() : async ?Float {
+        if (priceHistory.size() == 0) {
+            return null;
+        };
+        
+        var highest: Float = priceHistory[0].price;
+        for (entry in priceHistory.vals()) {
+            if (entry.price > highest) {
+                highest := entry.price;
+            };
+        };
+        
+        return ?highest;
+    };
 }

@@ -6,5 +6,6 @@ type PriceEntry =
 service : {
   addPrice: (float64) -> ();
   getAveragePrice: () -> (opt float64) query;
+  getHighestPrice: () -> (opt float64) query;
   getPrices: () -> (vec PriceEntry) query;
 }

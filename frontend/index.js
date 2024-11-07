@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const priceInput = document.getElementById('price');
         const price = parseFloat(priceInput.value);
         
-        // Show loading spinner
         const submitBtn = document.getElementById('submitBtn');
         const spinner = document.getElementById('submitSpinner');
         submitBtn.disabled = true;
@@ -54,6 +53,34 @@ document.addEventListener('DOMContentLoaded', () => {
             spinner.classList.add('d-none');
         }
     });
+
+    document.getElementById('highestBtn').addEventListener('click', async () => {
+        const highestBtn = document.getElementById('highestBtn');
+        const spinner = document.getElementById('highestSpinner');
+        const highestPrice = document.getElementById('highestPrice');
+        
+        highestBtn.disabled = true;
+        spinner.classList.remove('d-none');
+        highestPrice.classList.add('d-none');
+
+        try {
+            const highestResult = await backend.getHighestPrice();
+            if (highestResult.length === 0 || highestResult[0] === null) {
+                highestPrice.textContent = 'No prices available';
+            } else {
+                const highest = Number(highestResult[0]);
+                const roundedHighest = Math.round(highest * 100) / 100;
+                highestPrice.textContent = `Highest Price: $${roundedHighest}`;
+            }
+            highestPrice.classList.remove('d-none');
+        } catch (error) {
+            console.error('Error getting highest price:', error);
+            alert('Failed to get highest price. Please try again.');
+        } finally {
+            highestBtn.disabled = false;
+            spinner.classList.add('d-none');
+        }
+    });
 });
 
 async function loadPrices() {
@@ -65,13 +92,11 @@ async function loadPrices() {
     try {
         const prices = await backend.getPrices();
         
-        // Clear existing table rows
         priceTableBody.innerHTML = '';
         
-        // Add new rows
         prices.forEach(entry => {
             const row = document.createElement('tr');
-            const date = new Date(Number(entry.timestamp) / 1000000); // Convert nanoseconds to milliseconds
+            const date = new Date(Number(entry.timestamp) / 1000000);
             const price = Number(entry.price);
             const roundedPrice = Math.round(price * 100) / 100;
             

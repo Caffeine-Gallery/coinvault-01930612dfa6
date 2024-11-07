@@ -22,13 +22,23 @@
     cursor: not-allowed;
 }
 
-#averagePrice {
+#averagePrice, #highestPrice {
     margin-top: 1rem;
+}
+
+.btn-group {
+    gap: 0.5rem;
 }
 
 @media (max-width: 768px) {
     .container {
         padding: 0 15px;
+    }
+    
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
     }
     
     .btn {
